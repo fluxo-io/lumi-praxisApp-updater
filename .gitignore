@@ -1,0 +1,94 @@
+# --- Betriebssystem ---
+.DS_Store
+Thumbs.db
+
+# --- Secrets ---
+.env
+.env.*
+!.env.example
+
+# --- Logs ---
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# --- Node / npm (praxis-app, patienten-portal) ---
+node_modules/
+jspm_packages/
+.npm
+.eslintcache
+.node_repl_history
+*.tgz
+!**/vendor/*.tgz
+.yarn-integrity
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# --- Build-Artefakte ---
+.webpack/
+.vite/
+.cache
+out/
+build/Release
+dist/
+
+# --- Electron Forge (praxis-app) ---
+# gepackte Apps und Installer werden nicht versioniert
+
+# --- Tests / Coverage ---
+coverage
+*.lcov
+.nyc_output
+
+# --- TypeScript (falls später) ---
+typings/
+*.tsbuildinfo
+
+# --- Python (patienten-portal, api) ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+instance/
+
+# --- Datenbanken ---
+# Lokale SQLite-Daten liegen im Workspace-Ordner, nie im Repository
+*.db
+*.sqlite
+*.sqlite3
+
+# Lokale Arbeitskopien, Prüfberichte und Historien-Sicherungen
+.local/
+.artifacts/
+*.bundle
+
+# Schlüssel und lokale Daten
+*.p12
+*.pfx
+*.key
+*.pem
+*.dump
+*.sqlite*
+*.db-*
+
+# Komponentenspezifisch
+.DS_Store
+__pycache__/
+*.pyc
+.env
+*.exe
+*.nupkg
+*.zip
+RELEASES
+artifacts/
