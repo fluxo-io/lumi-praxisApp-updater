@@ -202,6 +202,7 @@ def verify(directory: Path, platform: str, arch: str, version: str) -> list[str]
             require(arch == "x64", "Windows wird nur für x64 ausgeliefert.")
             verify_windows(files, version)
         elif platform == "macos":
+            require(arch == "arm64", "macOS wird nur für arm64 (Apple Silicon) ausgeliefert.")
             expected = f"{PRODUCT}-darwin-{arch}-{version}.zip"
             candidates = [p for p in files if p.name == expected and p.is_file() and not p.is_symlink()]
             require(len(candidates) == 1, f"Genau ein macOS-ZIP namens {expected} ist erforderlich.")

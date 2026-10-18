@@ -10,7 +10,9 @@ der LUMI-Praxis-App. Quellcode und Builds liegen im
 |---|---|---|
 | Windows | x64 | Squirrel-Setup `.exe`, vollständiges `.nupkg`, `RELEASES` |
 | macOS | arm64 | signiertes, notarisiertes App-ZIP für arm64 |
-| macOS | x64 | signiertes, notarisiertes App-ZIP für x64 |
+
+Neue Versionen erscheinen ausschließlich für Windows x64 und Macs mit Apple Silicon.
+Intel-Macs und Universal-Builds werden nicht mehr ausgeliefert.
 
 GitHub-Releases für den öffentlichen Electron-Updatefeed müssen öffentlich
 erreichbar sein. Der Quellcode kann unabhängig davon privat bleiben. Eine
@@ -25,7 +27,7 @@ die Updatefunktion mit verständlichem Status deaktiviert.
 ## Veröffentlichung
 
 1. App-Version im Quellrepository setzen und die dort dokumentierten Prüfungen ausführen.
-2. Windows x64 und beide macOS-Architekturen mit den passenden Signing-Zertifikaten bauen.
+2. Windows x64 und macOS arm64 mit den passenden Signing-Zertifikaten bauen.
 3. Lokale Dateien mit `scripts/verify-release.py` prüfen.
 4. Nach Freigabe den manuellen Releaseablauf im Quellrepository ausführen.
 5. Signatur, Notarisierung und ein Update von einer installierten älteren Version
@@ -41,7 +43,6 @@ das automatische `GITHUB_TOKEN` eines anderen Repositories genügt dafür nicht.
 ```sh
 python3 scripts/verify-release.py --directory /pfad/zu/windows --platform windows --arch x64 --version 0.2.0
 python3 scripts/verify-release.py --directory /pfad/zu/macos-arm64 --platform macos --arch arm64 --version 0.2.0
-python3 scripts/verify-release.py --directory /pfad/zu/macos-x64 --platform macos --arch x64 --version 0.2.0
 python3 -m unittest discover -s tests -v
 ```
 
@@ -55,7 +56,6 @@ mit angepasst werden.
 | Ziel | Exakte Artefaktnamen für Version `0.2.0` |
 |---|---|
 | macOS arm64 | `LUMI Praxis-App-darwin-arm64-0.2.0.zip` |
-| macOS x64 | `LUMI Praxis-App-darwin-x64-0.2.0.zip` |
 | Windows x64 | `LUMI Praxis-App-0.2.0 Setup.exe`, `LUMI_Praxis-0.2.0-full.nupkg`, `RELEASES` |
 
 Für macOS prüft das Skript ZIP-Lesbarkeit und CRC, eindeutige Archivpfade,
@@ -63,7 +63,7 @@ das oberste App-Bundle, `CFBundleIdentifier`, beide Versionsfelder und
 `CFBundleExecutable` in der `Info.plist`. Das Hauptprogramm muss als ausführbare
 Datei enthalten sein. Seine Mach-O-Header sowie die erkennbaren, entpackten
 Mach-O-Binaries einschließlich Electron-Helpern und nativen `.node`-Modulen müssen
-die gewählte Architektur enthalten. Universal-Binaries werden anhand ihrer
+arm64 enthalten. Enthaltene Universal-Binaries werden anhand ihrer
 Slice-Tabelle und der tatsächlichen Slice-Header geprüft.
 
 Für Windows müssen Setup und Manifest nebeneinander liegen. Der aktuelle

@@ -90,6 +90,11 @@ class ReleaseTests(unittest.TestCase):
         mac(self.root, executable=fat_macho())
         self.assertEqual(self.check_mac(), [])
 
+    def test_macos_rejects_retired_intel_release_target(self):
+        mac(self.root, executable=macho("x64"))
+        (self.root / MAC_NAME).rename(self.root / f"LUMI Praxis-App-darwin-x64-{VERSION}.zip")
+        self.assertIn("Apple Silicon", module.verify(self.root, "macos", "x64", VERSION)[0])
+
     def test_macos_rejects_renamed_wrong_architecture(self):
         mac(self.root, executable=macho("x64"))
         self.assertIn("Architektur", self.check_mac()[0])
@@ -199,6 +204,7 @@ class ReleaseTests(unittest.TestCase):
         self.assertTrue(module.verify(self.root, "windows", "arm64", VERSION))
         self.assertTrue(module.verify(self.root, "linux", "x64", VERSION))
         self.assertTrue(module.verify(self.root, "macos", "other", VERSION))
+        self.assertTrue(module.verify(self.root, "macos", "universal", VERSION))
 
 
 if __name__ == "__main__":
